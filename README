@@ -1,0 +1,37 @@
+Link to textbook:
+https://vowi.fsinf.at/images/b/bc/TU_Wien-Verteilte_Systeme_VO_%28G%C3%B6schka%29_-_Tannenbaum-distributed_systems_principles_and_paradigms_2nd_edition.pdf
+page 388 of pdf
+369 of book
+
+Project Ideas:
+Have coordinator be separate and defined
+Java RMI - each process is a client
+configuration file for each spawned client
+
+        Checkpointing Process
+Step 1 - Coordinator sends out checkpoint call to each server. (adds random slight delay before sending each message to simulate/exadurate network latency?)
+Step 2 - Server recieves signal. Updates a variable that puts it in checkpointing mode.
+    In normal mode, when it recieves a message from another server it executes it and then sends it on. When it is ready to send a message to another server it sends it on.
+    In checkpointing mode, when it recieves a message from another server it puts it into a FIFO queue. When it is ready to send a message to antoher server it adds it to a seporate FIFO queue.
+Step 3 - Save a snapshot of the server's local storage ?including the contents of the send and receive arrays?
+Step 4 - Send back a "checkpointed" message to the corridnator.
+Step ?Should we include this also? - Each server sends the saved snapshot that was a consequence of the checkpoint to the coordiantor.
+Step 5 - When the coordinator recieves the "checkpointed" message from all servers, it sends a "done" message.
+Step 6 - When each server recieves the "done" message, it updates a variable to normal mode.
+Step 7 - Each server then sends all messages in its send queue and then receives each message it receive queue in the apropriate orders.
+
+Java RMI tutorial = https://www.youtube.com/watch?v=FX5hR-np-sg
+
+
+MILESTONES
+- implement simulator system that connects the nodes            - DONE
+- implement storage for incoming messages                       - DONE
+- implement two-phase blocking                                  - DONE?
+- determine setup of nodes in the system                        - not done
+- determine how nodes will store checkpoints                    - DONE
+- determine what our long running application actually does     - not done
+- validate system returns consistient outcomes                  - not done
+- implement server failures on command (detect failures?)       - DONE?
+- implement checkpointing algorithm                             - DONE
+- validate checkpointing system                                 - not done
+- test system perfmance with diffrent settings                  - not done
